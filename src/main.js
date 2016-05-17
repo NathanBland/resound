@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Home from './components/Home'
+import Room from './components/Room'
 import Error from './components/Error'
 import FakeEntries from './components/FakeEntries'
 import LogTime from './components/LogTime'
@@ -29,6 +30,10 @@ router.map({
         component: LogTime
       }
     }
+  },
+  '/room/:room': {
+    name: 'room',
+    component: Room
   }
 })
 
