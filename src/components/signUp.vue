@@ -1,8 +1,10 @@
 <template lang='jade'>
 .jumbotron
-  h1 Resound
+  h1 Uh Oh
+  h2 We're really sorry
+  
   p
-    strong Hey there. Thanks for visiting..
+    strong It looks like something got messed up. While we sort it out, try one of these:
   p
       a(v-link="'/login'") Login
       |  Or 

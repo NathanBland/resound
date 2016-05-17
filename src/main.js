@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Home from './components/Home'
+import Error from './components/Error'
 import FakeEntries from './components/FakeEntries'
 import LogTime from './components/LogTime'
 
@@ -15,8 +16,11 @@ Vue.use(VueRouter)
 const router = new VueRouter()
 
 router.map({
-  '/home': {
+  '/': {
     component: Home
+  },
+  '/404': {
+    component: Error
   },
   '/time-entries': {
     component: FakeEntries,
@@ -30,7 +34,7 @@ router.map({
 
 // Any invalid route will redirect to home
 router.redirect({
-  '*': '/home'
+  '*': '/404'
 })
 
 router.start(App, '#app')

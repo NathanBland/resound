@@ -13,7 +13,7 @@
   .container
     .columns
       .column.col-3.side-bar
-        sidebar(:time='totalTime')
+        //sidebar(:time='totalTime')
       .column.col-9.main
         router-view
 </template>
@@ -25,15 +25,15 @@
     components: {'sidebar': Sidebar},
     data () {
       return {
-        totalTime: 1.5
+        room: ''
       }
     },
     events: {
-      timeUpdate (timeEntry) {
-        this.totalTime += parseFloat(timeEntry.totalTime)
+      joinRoom (room) {
+        this.room = room
       },
-      deleteTime (timeEntry) {
-        this.totalTime -= parseFloat(timeEntry.totalTime)
+      leaveRoom (room) {
+        this.room = ''
       }
     }
   }
