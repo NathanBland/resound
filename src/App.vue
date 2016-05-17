@@ -13,7 +13,28 @@
   .container
     .columns
       .column.col-3.side-bar
+        sidebar(:time='totalTime')
       .column.col-9.main
         router-view
 </template>
 
+<script>
+  import Sidebar from './components/Sidebar'
+  
+  export default {
+    components: {'sidebar': Sidebar},
+    data () {
+      return {
+        totalTime: 1.5
+      }
+    },
+    events: {
+      timeUpdate (timeEntry) {
+        this.totalTime += parseFloat(timeEntry.totalTime)
+      },
+      deleteTime (timeEntry) {
+        this.totalTime -= parseFloat(timeEntry.totalTime)
+      }
+    }
+  }
+</script>

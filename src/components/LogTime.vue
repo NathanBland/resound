@@ -3,7 +3,7 @@
   .form-group
     .col-sm-4.input-group
       span.input-group-addon Date
-      input.form-input(type='date', v-model='timeEntry.date', placeholder='Date')
+      input.form-input(type='date', v-model='timeEntry.date', placeholder='Date', required)
     .col-sm-2
     
     .col-sm-3.input-group
