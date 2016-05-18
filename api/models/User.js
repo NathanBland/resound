@@ -8,6 +8,8 @@ var User = mongoose.Schema({
   }
 })
 
+User.plugin(require('passport-local-mongoose'))
+
 User.methods.getRooms = function (cb) {
   return Room.find({
     'users.user_id': this._id

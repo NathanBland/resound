@@ -2,9 +2,11 @@ import Vue from 'vue'
 import App from './App'
 import Home from './components/Home'
 import Room from './components/Room'
+import SignUp from './components/SignUp'
+import Login from './components/Login'
 import Error from './components/Error'
-import FakeEntries from './components/FakeEntries'
-import LogTime from './components/LogTime'
+import auth from './auth'
+import Lockr from 'lockr'
 
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
@@ -14,22 +16,24 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 Vue.use(VueRouter)
 
-const router = new VueRouter()
+Vue.http.headers.common['Authorization'] = 'Bearer ' + Lockr.get('token')
+
+auth.checkAuth()
+
+export const router = new VueRouter()
 
 router.map({
   '/': {
     component: Home
   },
+  '/login': {
+    component: Login
+  },
+  '/register': {
+    component: SignUp
+  },
   '/404': {
     component: Error
-  },
-  '/time-entries': {
-    component: FakeEntries,
-    subRoutes: {
-      '/log-time': {
-        component: LogTime
-      }
-    }
   },
   '/room/:room': {
     name: 'room',

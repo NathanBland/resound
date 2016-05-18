@@ -34,6 +34,8 @@
       },
       leaveRoom (room) {
         this.room = ''
+      },
+      getToken (token) {
       }
     }
   }

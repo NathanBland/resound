@@ -3,6 +3,7 @@ var User = require('../../models/User')
 
 module.exports = function (app, express) {
   var router = express.Router()
+  router.all('/', passport.authenticate('bearer', { session: false }))
   router.route('/:room/')
   .get(function (req, res, next) {
     if (!req.params.room) {
@@ -23,17 +24,18 @@ module.exports = function (app, express) {
     if (!req.body.message) {
       return next('Cannot send empty message!')
     }
-    Room.findByIdAndUpdate(
+    Room.findOneAndUpdate(
       {'alias': req.params.room},
       {$push: 
-        {"messages": {
-          message: req.body.message, 
-          user_id: req.user._id || ''
+        {messages: {
+          message: req.body.message
+          //user_id: req.user || ''
         }
       }},
-      {safe: true, new : true},
+      {safe: true, upsert: true, new : true},
       function(err, room) {
        if (err) {
+         console.log('(PUT) message:', err)
          next(err)
        }
        return res.status(201).json(room)
