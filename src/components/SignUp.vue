@@ -29,7 +29,7 @@
           username: this.username,
           password: this.password
         }
-        auth.signup(this, credentials)
+        auth.signup(this, credentials, '/home')
         /* this.$http.post('/auth/local/login').then(function (res) {
           console.log('auth status:', res.status)
           if (res.data.token) {

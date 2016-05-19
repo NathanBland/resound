@@ -4,6 +4,8 @@ var mongoose = require('mongoose')
 var routes = require('./routes/')
 
 var app = express()
+var server = require('http').Server(app)
+var io = require('socket.io')(server)
 
 app.set('dbhost', process.env.dbHost || '127.0.0.1')
 app.set('dbname', process.env.dbName || 'resound')
@@ -24,6 +26,10 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(routes(app, express))
-var server = app.listen(app.get('port'), app.get('ip'), function () {
+io.on('connection', function (socket) {
+    require('./socketHandle')(socket)
+  })
+require('./socketHandle')
+server.listen(app.get('port'), app.get('ip'), function () {
   console.log('resound api has started...')
 })

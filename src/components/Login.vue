@@ -2,8 +2,11 @@
 .login
   h1 Login
   h2 Please sign in
-  .alert.alert-danger(v-if='error')
-    p {{ error }}
+  .toast.toast-danger(v-if='error')
+    button.btn.btn-clear.float-right(@click='hideMe()')
+    span.icon.icon-error_outline
+    span(v-if='error === "Unauthorized"')
+    | That didn't work, please try again.
   form(@submit.prevent='doAuth()')
     .input-group
       span.input-group-addon Username
@@ -21,18 +24,23 @@
         token: '',
         username: '',
         password: '',
-        error: ''
+        error: '',
+        hide: {
+          display: 'none'
+        }
       }
     },
     methods: {
+      hideMe () {
+        this.$set('error', '')
+      },
       doAuth () {
         console.log('do auth')
         var credentials = {
           username: this.username,
           password: this.password
         }
-        auth.login(this, credentials, 'home')
-        console.log('auth:', auth.user, '/room/test')
+        auth.login(this, credentials, '/home')
         /* this.$http.post('/auth/local/login').then(function (res) {
           console.log('auth status:', res.status)
           if (res.data.token) {
@@ -45,3 +53,8 @@
     }
   }
 </script>
+
+<style scoped lang='sass'>
+  .toast
+    margin-bottom: 1em 
+</style>

@@ -5,11 +5,13 @@
       a.btn.btn-link.btn-lg(href='#')
         i.icon.fa.fa-bars
       a.navbar-brand(href='/') Resound
-    section.navbar-section
+    section.navbar-section(:isAuthentiated v-if='!isAuthentiated')
       input.form-input.input-inline(type='text', placeholder='search')
       a.btn.btn-link(href='/') Home
-      a.btn.btn-link(href='#') Login
-      a.btn.btn-primary(href='#') Sign up
+      a.btn.btn-link(v-link="'/login'") Login
+      a.btn.btn-primary(v-link="'/signup'") Sign up
+    section.navbar-section(v-else)
+      a.btn.btn-link(v-link="'/logout'") Logout
   .container
     .columns
       .column.col-3.side-bar
@@ -20,12 +22,17 @@
 
 <script>
   import Sidebar from './components/Sidebar'
-  
+  import Lockr from 'lockr'
   export default {
     components: {'sidebar': Sidebar},
     data () {
       return {
         room: ''
+      }
+    },
+    computed: {
+      isAuthentiated: function () {
+        return Lockr.get('token')
       }
     },
     events: {
@@ -34,8 +41,6 @@
       },
       leaveRoom (room) {
         this.room = ''
-      },
-      getToken (token) {
       }
     }
   }

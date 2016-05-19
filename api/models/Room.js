@@ -9,8 +9,11 @@ var message = mongoose.Schema({
   },
   date: {type: Date, default: Date.now}
 })
-var users = mongoose.Schema({
-  online: Boolean, 
+var user = mongoose.Schema({
+  online: {
+    type: Boolean,
+    default: false,
+  }, 
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
@@ -24,7 +27,7 @@ var Room = mongoose.Schema({
   alias: String,
   created: {type: Date, default: Date.now},
   updated: {type: Date, default: Date.now},
-  users: [users]
+  users: [user]
 })
 
 module.exports = mongoose.model('room', Room)

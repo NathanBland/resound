@@ -1,5 +1,5 @@
 <template lang='jade'>
-  div.messageList(v-if='messages')
+  div.messageList(:messages v-if='messages.length > 0')
     .card.message(v-for='message in messages')
       .card-body
         .chip-sm
@@ -22,9 +22,10 @@
     props: ['messages'],
     watch: {
       messages: function (e) {
-        console.log('this:', this)
-        let msgs = document.querySelectorAll('.card-body')
-        msgs[msgs.length - 1].scrollIntoView()
+        if (this.messages.length > 0) {
+          let msgs = document.querySelectorAll('.card-body')
+          msgs[msgs.length - 1].scrollIntoView()
+        }
       }
     }
   }

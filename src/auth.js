@@ -28,7 +28,7 @@ export default {
   },
 
   signup (context, creds, redirect) {
-    context.$http.post(SIGNUP_URL, creds, (data) => {
+    context.$http.post(SIGNUP_URL, creds).then(function (data) {
       Lockr.set('token', data.token)
       Lockr.set('username', data.username)
       this.user.authenticated = true
@@ -36,7 +36,7 @@ export default {
       if (redirect) {
         router.go(redirect)
       }
-    }).error((err) => {
+    }).catch(function (err) {
       context.error = err
     })
   },
