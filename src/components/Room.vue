@@ -13,7 +13,7 @@
 <script>
   import messageList from './messageList'
   import messageInput from './messageInput'
-  
+  import auth from '../auth'
   export default {
     components: {
       'messageList': messageList,
@@ -23,10 +23,21 @@
         messages: [{user: 'Server Bot', msg: 'There aren\'t any messages here yet :('}, {user: 'Server Bot', msg: 'Time to start a conversation!'}]
       }
     },
+    computed: {
+      user: function () {
+        return auth.user
+      }
+    },
     events: {
       sendMessage (message) {
-        this.messages.push({user: '', msg: message})
+        console.log('(message) auth:', auth.user)
+        this.messages.push({user: auth.user.username, msg: message})
         return true
+      }
+    },
+    route: {
+      canActivate () {
+        return auth.user.authenticated
       }
     },
     props: ['room']

@@ -1,5 +1,5 @@
 <template lang='jade'>
-form(@submit='send()')
+form(@submit.prevent='send()')
   // form input control
   .input-group
     span.input-group-addon(for='message') Message
@@ -21,7 +21,8 @@ form(@submit='send()')
         this.$dispatch('sendMessage', message)
         this.message = ''
       }
-    }
+    },
+    props: ['username']
   }
 </script>
 

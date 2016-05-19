@@ -1,5 +1,6 @@
 var Room = require('../../models/Room')
 var User = require('../../models/User')
+var passport = require('passport')
 
 module.exports = function (app, express) {
   var router = express.Router()

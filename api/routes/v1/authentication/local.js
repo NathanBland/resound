@@ -50,7 +50,8 @@ module.exports = function (app, express) {
           expiresAt: expires.setHours(expires.getHours()+8)},
           tokenSecret)
         return res.status(200).json({
-          token: token
+          token: token,
+          username: req.user.username
         })
       })
     })
@@ -66,7 +67,8 @@ module.exports = function (app, express) {
         expiresAt: expires.setHours(expires.getHours()+8)},
         tokenSecret)
       return res.status(200).json({
-        token: token
+        token: token,
+        username: req.user.username
       })
     })
 

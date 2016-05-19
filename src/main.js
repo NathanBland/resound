@@ -29,7 +29,7 @@ router.map({
   '/login': {
     component: Login
   },
-  '/register': {
+  '/signup': {
     component: SignUp
   },
   '/404': {

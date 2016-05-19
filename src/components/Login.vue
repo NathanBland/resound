@@ -2,7 +2,9 @@
 .login
   h1 Login
   h2 Please sign in
-  form(v-on:submit.prevent='doAuth()')
+  .alert.alert-danger(v-if='error')
+    p {{ error }}
+  form(@submit.prevent='doAuth()')
     .input-group
       span.input-group-addon Username
       input.form-input(type='text', name='username', v-model='username', placeholder='SlimJim')
@@ -18,7 +20,8 @@
       return {
         token: '',
         username: '',
-        password: ''
+        password: '',
+        error: ''
       }
     },
     methods: {
@@ -28,7 +31,8 @@
           username: this.username,
           password: this.password
         }
-        auth.login(this, credentials, 'secretquote')
+        auth.login(this, credentials, 'home')
+        console.log('auth:', auth.user, '/room/test')
         /* this.$http.post('/auth/local/login').then(function (res) {
           console.log('auth status:', res.status)
           if (res.data.token) {
