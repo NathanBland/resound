@@ -18,8 +18,8 @@
   import auth from '../auth'
   import {router} from '../main'
   import io from 'socket.io-client'
-  let socket = io('//localhost:8081')
-  // import Lockr from 'lockr'
+  
+  import Lockr from 'lockr'
   export default {
     components: {
       'messageList': messageList,
@@ -37,9 +37,18 @@
         console.log('res:', res)
         this.$set('messages', res.data.messages)
         this.$set('users', res.data.users)
+        var socket = io.connect('//localhost:8081', {
+          query: 'token=' + Lockr.get('token')
+        })
         socket.on('connect', function (data) {
-          console.log('got Socket Connection:', data)
-          // socket.emit('join', location.pathname)
+          // console.log('got Socket Connection:', data)
+          socket.emit('join', {room: res.data.alias})
+        })
+        socket.on('rejected', function (data) {
+          console.log('we must have been bad. :(')
+        })
+        socket.on('authenticated', function (data) {
+          console.log('Yay us!')
         })
       }, function (res) {
         console.log('err:', res)

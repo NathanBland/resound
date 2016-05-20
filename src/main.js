@@ -21,9 +21,11 @@ Vue.use(VueRouter)
 Vue.http.options.root = process.env.API || 'http://localhost:8081/api/v1'
 Vue.http.interceptors.push({
   request: function (request) {
-    console.log('before.. :', request)
+    // console.log('before.. :', request)
     // request.headers['Authorization'] = 'Bearer ' + Lockr.get('token')
-    request.url += '?access_token=' + Lockr.get('token')
+    if (request.url.indexOf('auth') < 0) {
+      request.url += '?access_token=' + Lockr.get('token')
+    }
     return request
   }
 })
@@ -53,7 +55,7 @@ router.map({
   }
 })
 router.beforeEach(function ({ to, next }) {
-  console.log('to:', to)
+  // console.log('to:', to)
   next()
 })
 // Any invalid route will redirect to home

@@ -2,7 +2,8 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
 var routes = require('./routes/')
-
+var jwt = require('jwt-simple')
+var socketioJwt = require('socketio-jwt')
 var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
@@ -26,8 +27,24 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(routes(app, express))
+io.use(function (socket, next) {
+  var handshakeData = socket.request._query.token
+  var tokenSecret = process.env.tokenSecret || 'a really awful secret'
+  if (handshakeData) {
+    try {
+    var decoded = jwt.decode(handshakeData, tokenSecret)
+    console.log('got data:', decoded)
+    socket.authenticated = true
+    } catch (err) {
+      console.log('err:', err)
+    }
+  }
+  next()
+})
+
 io.on('connection', function (socket) {
-    require('./socketHandle')(socket)
+    // console.log(socket.handshake.decoded_token.username,', connected')
+    require('./socketHandle')(socket, io)
   })
 require('./socketHandle')
 server.listen(app.get('port'), app.get('ip'), function () {
