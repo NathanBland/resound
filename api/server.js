@@ -11,7 +11,7 @@ var io = require('socket.io')(server)
 app.set('dbhost', process.env.dbHost || '127.0.0.1')
 app.set('dbname', process.env.dbName || 'resound')
 
-mongoose.connect('mongodb://' + app.get('dbhost') + '/' + app.get('dbname'))
+mongoose.connect('mongodb://'+process.env.dbUser+':'+process.env.dbPass+'@' + app.get('dbhost') + '/' + app.get('dbname'))
 
 app.set('port', process.env.port || 8081)
 app.set('ip', process.env.host || '0.0.0.0')

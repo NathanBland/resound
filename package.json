@@ -1,6 +1,9 @@
 {
   "name": "resound",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.2.0"
+  },
   "description": "A Vue.js project",
   "author": "Nathan Bland <nathan.bland@gmail.com>",
   "private": true,
