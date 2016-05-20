@@ -38,7 +38,7 @@
         console.log('res:', res)
         this.$set('messages', res.data.messages)
         this.$set('users', res.data.users)
-        var socket = io.connect('//localhost:8081', {
+        var socket = io.connect('//resound-api.herokuapp.com', {
           query: 'token=' + Lockr.get('token')
         })
         this.$set('socket', socket)

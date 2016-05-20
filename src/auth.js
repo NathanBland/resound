@@ -1,7 +1,7 @@
 import {router} from './main'
 import Lockr from 'lockr'
 
-const API_URL = 'http://localhost:8081/api/v1'
+const API_URL = 'https://resound-api.herokuapp.com/api/v1'
 const LOGIN_URL = API_URL + '/auth/local/login/'
 const SIGNUP_URL = API_URL + '/auth/local/register/'
 

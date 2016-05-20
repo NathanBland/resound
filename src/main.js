@@ -18,7 +18,7 @@ Vue.use(VueResource)
 Vue.use(VueRouter)
 
 // Vue.http.headers.common['Authorization'] = 'Bearer ' + Lockr.get('token')
-Vue.http.options.root = process.env.API || 'http://localhost:8081/api/v1'
+Vue.http.options.root = process.env.API || 'https://resound-api.herokuapp.com/api/v1'
 Vue.http.interceptors.push({
   request: function (request) {
     // console.log('before.. :', request)
