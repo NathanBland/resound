@@ -41,6 +41,7 @@
           password: this.password
         }
         auth.login(this, credentials, '/home')
+        this.$dispatch('authenticated', auth.user.authenticated)
         /* this.$http.post('/auth/local/login').then(function (res) {
           console.log('auth status:', res.status)
           if (res.data.token) {

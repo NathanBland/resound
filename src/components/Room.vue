@@ -2,7 +2,7 @@
   .room
     ul.breadcrumb
       li.breadcrumb-item
-        a(href='#') Home
+        a(v-link="'/home'") Home
       li.breadcrumb-item
           a(v-link="{ name: 'room', params: { room: $route.params.room }}") {{$route.params.room}}
     user-chip(:users='users')
@@ -29,7 +29,8 @@
       return {
         messages: [],
         users: [],
-        connected: false
+        connected: false,
+        socket: {}
       }
     },
     ready: function () {
@@ -40,6 +41,8 @@
         var socket = io.connect('//localhost:8081', {
           query: 'token=' + Lockr.get('token')
         })
+        this.$set('socket', socket)
+        let myVue = this
         socket.on('connect', function (data) {
           // console.log('got Socket Connection:', data)
           socket.emit('join', {room: res.data.alias})
@@ -49,6 +52,12 @@
         })
         socket.on('authenticated', function (data) {
           console.log('Yay us!')
+        })
+        socket.on('joined', function (data) {
+          console.log('joined room:', data)
+        })
+        socket.on('message', function (data) {
+          myVue.messages.push({user: data.user, msg: data.msg})
         })
       }, function (res) {
         console.log('err:', res)
@@ -71,8 +80,12 @@
     events: {
       sendMessage (message) {
         // console.log('(message) auth:', auth.user)
-        this.messages.push({user: auth.user.username, msg: message})
-        return true
+        if (auth.user.username) {
+          this.messages.push({user: auth.user.username, msg: message})
+          this.socket.emit('message', message)
+          return true
+        }
+        return false
       }
     },
     route: {

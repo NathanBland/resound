@@ -4,15 +4,15 @@
       .card-body
         .chip-sm
           figure.avatar.avatar-xl(data-initial='{{message.user | limitBy 2}}', style='background-color: #5764c6;')
-          span.chip-name {{message.user}}
-        span  {{message.msg}}
+          span.chip-name {{message.user || message.user_id.username}}
+        span  {{message.msg || message.message}}
             
   div.empty(v-else)
     h1
       i.fa.fa-comments-o
     p.empty-title No messages in this chat
     p.empty-meta Start by sending a message or inviting people.
-    button.btn.btn-primary Copy Link
+    button.btn.btn-primary Copy Link (this doesn't work.)
 
 </template>
 

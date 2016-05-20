@@ -35,18 +35,23 @@ export const router = new VueRouter()
 
 router.map({
   '/': {
+    name: 'root',
     component: Home
   },
   '/home': {
+    name: 'home',
     component: Dashboard
   },
   '/login': {
+    name: 'login',
     component: Login
   },
   '/signup': {
+    name: 'signup',
     component: SignUp
   },
   '/404': {
+    name: 'error',
     component: Error
   },
   '/room/:room': {
@@ -55,7 +60,11 @@ router.map({
   }
 })
 router.beforeEach(function ({ to, next }) {
-  // console.log('to:', to)
+  console.log('going to:', to)
+  if (to.name === 'root' && auth.checkAuth()) {
+    console.log('redirecting to home...')
+    router.go('/home')
+  }
   next()
 })
 // Any invalid route will redirect to home

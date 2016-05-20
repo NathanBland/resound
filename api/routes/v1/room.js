@@ -11,6 +11,7 @@ module.exports = function (app, express) {
       return next('No room specified.')
     } else {
       Room.findOne({alias: req.params.room})
+      .populate('messages.user_id')
       .populate('users.user_id')
       .exec(function (err, room) {
         if (err) {

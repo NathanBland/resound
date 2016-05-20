@@ -42,6 +42,7 @@ export default {
   },
 
   logout () {
+    console.log('logging out')
     Lockr.rm('token')
     Lockr.rm('username')
     this.user.authenticated = false
@@ -52,8 +53,10 @@ export default {
     if (jwt) {
       this.user.username = Lockr.get('username')
       this.user.authenticated = true
+      // Vue.$broadcast('authenticated', true)
     } else {
       this.user.authenticated = false
+      // Vue.$broadcast('authenticated', false)
     }
   },
 

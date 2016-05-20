@@ -33,8 +33,9 @@ io.use(function (socket, next) {
   if (handshakeData) {
     try {
     var decoded = jwt.decode(handshakeData, tokenSecret)
-    console.log('got data:', decoded)
+    // console.log('got data:', decoded)
     socket.authenticated = true
+    socket.user = decoded 
     } catch (err) {
       console.log('err:', err)
     }
