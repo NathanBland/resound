@@ -13,8 +13,8 @@ app.set('dbname', process.env.dbName || 'resound')
 
 mongoose.connect('mongodb://'+process.env.dbUser+':'+process.env.dbPass+'@' + app.get('dbhost') + '/' + app.get('dbname'))
 
-app.set('port', process.env.port || 8081)
-app.set('ip', process.env.host || '0.0.0.0')
+app.set('port', process.env.PORT || 8081)
+app.set('ip', process.env.IP || '0.0.0.0')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
